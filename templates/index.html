@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center">  Ai-assistant </h1>
+            </div>
+            <div class="card-body">
+                <div id="chat-log" class="mb-3 p-3 border rounded bg-light"></div>
+                <input type="text" id="user-input" class="form-control mb-3" placeholder="write your message here..." aria-label="User input">
+                <button onclick="sendMessage()" class="btn btn-success btn-block">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_input: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const chatLog = document.getElementById('chat-log');
+                chatLog.innerHTML += `<p><strong>You:</strong> ${userInput}</p>`;
+                chatLog.innerHTML += `<p><strong>assistant:</strong> ${data.response}</p>`;
+                document.getElementById('user-input').value = '';
+            });
+        }
+    </script>
+</body>
+</html>
