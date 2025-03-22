@@ -6,7 +6,7 @@ app = Flask(__name__)
 def ai_response(user_input):
     # This part can be replaced with a real AI model
     if "hello" in user_input.lower():
-        return "Hello! How can I assist you today?"
+        return "Hello How can I assist you today?"
     elif "how are you" in user_input.lower():
         return "I'm fine, thank you for asking!"
     else:
